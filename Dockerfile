@@ -5,14 +5,17 @@ ARG BASE_DEBIAN=bookworm-slim
 # We utilize this small alpine layer to cache the downloaded xampp installer
 ################################################################################
 FROM alpine/curl as xampp_downloader
-ARG XAMPP_URL
-RUN curl -Lo xampp-linux-installer.run $XAMPP_URL
+# Get xampp installation from url, requires to download It every time we build
+#ARG XAMPP_URL
+#RUN curl -Lo xampp-linux-installer.run $XAMPP_URL
+# Or copy xamp installation from directory 
+ARG XAMPP_PATH
+COPY $XAMPP_PATH xampp-linux-installer.run 
 
 ################################################################################
 # Here, we build the xampp image
 ################################################################################
 FROM debian:${BASE_DEBIAN}
-LABEL maintainer="Tomas Jasek<tomsik68 (at) gmail (dot) com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -58,3 +61,6 @@ EXPOSE 22
 EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-n"]
+
+# Added path to acces lampp programs
+ENV PATH=/opt/lampp/bin:$PATH

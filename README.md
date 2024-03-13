@@ -17,13 +17,18 @@ docker run --name myXampp -p 41061:22 -p 41062:80 -d -v ~/my_web_pages:/www toms
 docker-xampp
 ===
 
-This image is intended for PHP+MySQL development. For convenience, it also runs SSH server to connect to. __Both MySQL and phpmyadmin use default XAMPP password__.
+This image is my fork of `docker-xampp` pathed to add Tomcat and Java features. For convenience, it also runs SSH server to connect to. __Both MySQL and phpmyadmin use default XAMPP password__.
 
-## Any questions?
 
-Please read this readme before asking anything.
+## Building this image
 
-If you didn't find answer to your question, [create an issue](https://github.com/tomsik68/docker-xampp/issues) or just [ask on Gitter](https://gitter.im/docker-xampp/community). I'll try to help if I can!
+You can build this image with this command:
+```bash 
+docker build -t xampp . --build-arg XAMPP_PATH=~/Downloads/xampp-linux-x64-8.2.4-0-installer.run
+```
+You need to set the XAMPP_PATH variable to your local download of xampp, which can be downloaded [here](https://www.apachefriends.org/it/download.html)
+
+Or if you want you can enable downloading of the package by docker by changing the Dockerfile on the line where XAMPP_URL is.
 
 ## Running the image
 
