@@ -36,7 +36,7 @@ Where:
 To browse to your web page, visit this URL: [http://localhost:41062/www](http://localhost:41062/www)
 And to open up the XAMPP interface: [http://localhost:41062/](http://localhost:41062/)
 
-
+The credentials for the manager panel for tomcat are "manger:manager" and "admin:admin"
 
 # Get a shell terminal inside your container
 
