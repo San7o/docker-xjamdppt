@@ -4,6 +4,7 @@ ARG BASE_DEBIAN=bookworm-slim
 ################################################################################
 # We utilize this small alpine layer to cache the downloaded xampp installer
 ################################################################################
+
 FROM alpine/curl as xampp_downloader
 # Get xampp installation from url, requires to download It every time we build
 #ARG XAMPP_URL
@@ -51,16 +52,75 @@ RUN chmod +x xampp-linux-installer.run && \
   # Allow root login via password
   sed -ri 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 
+
+################################################################################
+# Here, we build tomcat
+################################################################################
+
+RUN echo "Installing java" && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends default-jdk wget && \
+    # It is not advisable to run Tomcat under a root account.
+    # Hence we need to create a new user where we run the Tomcat 
+    # server on our system
+    echo "Adding user tomcat" && \
+    useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat && \
+    # Getting Tomcat
+    echo "Downloading Tomcat 8.5.79" && \
+    wget -c https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.79/bin/apache-tomcat-8.5.79.tar.gz && \
+    echo "Tomcat Downloaded, unpacking" && \
+    # TODO chech checksum 
+    tar xf apache-tomcat-8.5.79.tar.gz -C /opt/tomcat && \
+    # Now we need to provide the user Tomcat with access for the Tomcat installation 
+    # directory. We would use the chown command to change the directory ownership.
+    echo "Setting up permissions" && \
+    chown -R tomcat: /opt/tomcat/* && \
+    # Finally, we will use the chmod command to provide all executable flags to all 
+    # scripts within the bin directory.
+    # Configure admin users
+    echo "Writing /opt/tomcat/apache-tomcat-8.5.79/conf/tomcat-users.xml" && \
+    echo "\
+<tomcat-users xmlns=\"http://tomcat.apache.org/xml\"\n\
+          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\
+          xsi:schemaLocation=\"http://tomcat.apache.org/xml tomcat-users.xsd\"\n\
+          version=\"1.0\">\
+<role rolename=\"manager-gui\" />\n\
+<user username=\"manager\" password=\"manager\" roles=\"manager-gui\" />\n\n\
+<role rolename=\"admin-gui\" />\n\
+<user username=\"admin\" password=\"admin\" roles=\"manager-gui,admin-gui\" />\n\
+</tomcat-users>" \
+   > /opt/tomcat/apache-tomcat-8.5.79/conf/tomcat-users.xml && \
+   # Allow access from browsers
+   echo "\
+<Context antiResourceLocking=\"false\" privileged=\"true\" >\n\
+  <CookieProcessor className=\"org.apache.tomcat.util.http.Rfc6265CookieProcessor\"\n\
+                   sameSiteCookies=\"strict\" />\n\
+  <Manager sessionAttributeValueClassNameFilter=\"java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap\"/>\n\
+</Context>\n\
+   " > /opt/tomcat/apache-tomcat-8.5.79/webapps/manager/META-INF/context.xml && \
+   echo "Cleaning Up" && \
+   rm apache-tomcat-8.5.79.tar.gz && \
+   echo "Installation Completed!"
+
+
 # copy supervisor config file to start openssh-server
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 VOLUME [ "/var/log/mysql/", "/var/log/apache2/", "/www", "/opt/lampp/apache2/conf.d/" ]
 
+# Listen to those ports 
+
 EXPOSE 3306
+# SSH
 EXPOSE 22
+# Main
 EXPOSE 80
+# Tomcat
+EXPOSE 8080
 
 CMD ["/usr/bin/supervisord", "-n"]
 
 # Added path to acces lampp programs
 ENV PATH=/opt/lampp/bin:$PATH
+
+
