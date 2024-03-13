@@ -1,6 +1,6 @@
 # docker-xjamppt
 
-This image is my fork of `docker-xampp` pathed to add Tomcat and Java features. For convenience, it also runs SSH server to connect to. __Both MySQL and phpmyadmin use default XAMPP password__.
+This image is my fork of `docker-xampp` adding Tomcat and Java. Like the orifinal image, it also runs SSH server to connect to. __Both MySQL and phpmyadmin use default XAMPP password__.
 
 
 # Building this image
