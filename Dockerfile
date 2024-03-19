@@ -59,7 +59,7 @@ RUN chmod +x xampp-linux-installer.run && \
 
 RUN echo "Installing java" && \
     apt-get update && \
-    apt-get install -y --no-install-recommends default-jdk wget && \
+    apt-get install -y --no-install-recommends default-jdk wget tmux && \
     # It is not advisable to run Tomcat under a root account.
     # Hence we need to create a new user where we run the Tomcat 
     # server on our system
@@ -101,6 +101,9 @@ RUN echo "Installing java" && \
    echo "Cleaning Up" && \
    rm apache-tomcat-8.5.79.tar.gz && \
    echo "Installation Completed!"
+
+# TODO copy the tomcat servlet template 
+
 
 
 # copy supervisor config file to start openssh-server
