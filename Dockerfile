@@ -104,7 +104,18 @@ RUN echo "Installing java" && \
 
 # TODO copy the tomcat servlet template 
 
+#Let's add maven!
+RUN echo "Installing Maven" && \
+   wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz && \
+   tar -xpvf apache-maven-3.9.6-bin.tar.gz && \
+   echo "Cleaning Up" && \
+   rm apache-maven-3.9.6-bin.tar.gz && \
+   echo "Installation Completed!"
 
+#Let's add neofetch!
+RUN echo "Installing neofetch" && \
+   apt-get install -y --no-install-recommends neofetch && \
+   echo "Installation Completed!"
 
 # copy supervisor config file to start openssh-server
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -125,5 +136,7 @@ CMD ["/usr/bin/supervisord", "-n"]
 
 # Added path to acces lampp programs
 ENV PATH=/opt/lampp/bin:$PATH
+
+
 
 
