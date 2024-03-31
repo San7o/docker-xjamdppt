@@ -112,6 +112,14 @@ RUN echo "Installing Maven" && \
    rm apache-maven-3.9.6-bin.tar.gz && \
    echo "Installation Completed!"
 
+#Let's create a macro to compile our website and deploy it in tomcat!
+RUN echo "#!/bin/bash" > /bin/deploy_website.sh && \
+    echo "cd \$1 || exit 1" >> /bin/deploy_website.sh && \
+    echo "/apache-maven-3.9.6/bin/mvn package" >> /bin/deploy_website.sh&& \
+    echo "mv target/*.war /opt/tomcat/apache-tomcat-8.5.79/webapps/" >> /bin/deploy_website.sh && \
+    chmod +x /bin/deploy_website.sh
+
+
 #Let's add neofetch!
 RUN echo "Installing neofetch" && \
    apt-get install -y --no-install-recommends neofetch && \

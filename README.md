@@ -9,9 +9,9 @@ This image is my fork of `docker-xampp` adding Tomcat and Java. Like the origina
 
 Example build command:
 ```bash 
-docker build -t xjamppt . --build-arg XAMPP_PATH=~/Downloads/xampp-linux-x64-8.2.4-0-installer.run
+docker build -t xjamppt . --build-arg XAMPP_PATH=~/Downloads/xampp-linux-*-installer.run
 ```
-Where you need to set the XAMPP_PATH variable to your local download of xampp, which can be downloaded [here](https://www.apachefriends.org/it/download.html)
+Where you need to set the "XAMPP_PATH" variable to your local download of xampp, which can be downloaded [here](https://www.apachefriends.org/it/download.html)
 
 Or if you want you can enable downloading from docker by changing the Dockerfile on the line where XAMPP_URL is.
 
