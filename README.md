@@ -36,6 +36,20 @@ Where:
 To browse to your web page, visit this URL: [http://localhost:41062/www](http://localhost:41062/www)
 And to open up the XAMPP interface: [http://localhost:41062/](http://localhost:41062/)
 
+
+# Deploy the webapp with tomcat
+
+Start tomcat with
+```
+docker exec -it myXampp bash
+bash> /opt/tomcat/apache-tomcat-8.5.79/bin/startup.sh
+```
+Then, you need to move the webapp to `my_web_pages/<webapp_name>` and run the command
+```
+docker exec -it myXampp deploy_website.sh /www/<webapp_name>
+```
+
+
 # Get a shell terminal inside your container
 
 ```bash
