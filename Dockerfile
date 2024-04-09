@@ -1,9 +1,11 @@
 # Global args
 ARG BASE_DEBIAN=bookworm-slim
 
+
 ################################################################################
 # We utilize this small alpine layer to cache the downloaded xampp installer
 ################################################################################
+
 
 FROM alpine/curl as xampp_downloader
 # Get xampp installation from url, requires to download It every time we build
@@ -13,9 +15,11 @@ FROM alpine/curl as xampp_downloader
 ARG XAMPP_PATH
 COPY $XAMPP_PATH xampp-linux-installer.run 
 
+
 ################################################################################
-# Here, we build the xampp image
+#                                Building XAMPP
 ################################################################################
+
 FROM debian:${BASE_DEBIAN}
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -54,7 +58,7 @@ RUN chmod +x xampp-linux-installer.run && \
 
 
 ################################################################################
-# Here, we build tomcat
+#                                Installing Tomcat
 ################################################################################
 
 RUN echo "Installing java" && \
@@ -100,32 +104,53 @@ RUN echo "Installing java" && \
    " > /opt/tomcat/apache-tomcat-8.5.79/webapps/manager/META-INF/context.xml && \
    echo "Cleaning Up" && \
    rm apache-tomcat-8.5.79.tar.gz && \
-   echo "Installation Completed!"
+   echo "Tomcat Installed"
 
-# TODO copy the tomcat servlet template 
+################################################################################
+#                                Installing Derby
+################################################################################
 
-#Let's add maven!
+RUN echo "Downloading Derby" && \
+    wget -c https://dlcdn.apache.org//db/derby/db-derby-10.16.1.1/db-derby-10.16.1.1-bin.tar.gz && \
+    mv db-derby-10.16.1.1-bin.tar.gz /opt && \
+    cd /opt && \
+    tar -xpvf db-derby-10.16.1.1-bin.tar.gz && \
+    rm db-derby-10.16.1.1-bin.tar.gz && \
+    echo "Derby Installed"
+
+ENV DERBY_INSTALL=/opt/db-derby-10.16.1.1-bin
+
+################################################################################
+#                               Installing Maven
+################################################################################
+
 RUN echo "Installing Maven" && \
    wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz && \
    tar -xpvf apache-maven-3.9.6-bin.tar.gz && \
    echo "Cleaning Up" && \
    rm apache-maven-3.9.6-bin.tar.gz && \
+   mv apache-maven-3.9.6 /opt && \
    echo "Installation Completed!"
 
-#Let's create a macro to compile our website and deploy it in tomcat!
+################################################################################
+
+# Macro to compile our website and deploy it in tomcat!
+
 RUN echo "#!/bin/bash" > /bin/deploy_website.sh && \
     echo "cd \$1 || exit 1" >> /bin/deploy_website.sh && \
-    echo "/apache-maven-3.9.6/bin/mvn package" >> /bin/deploy_website.sh&& \
+    echo "/opt/apache-maven-3.9.6/bin/mvn package" >> /bin/deploy_website.sh&& \
     echo "mv target/*.war /opt/tomcat/apache-tomcat-8.5.79/webapps/" >> /bin/deploy_website.sh && \
     chmod +x /bin/deploy_website.sh
 
 
-#Let's add neofetch!
+# Neofetch
+
 RUN echo "Installing neofetch" && \
    apt-get install -y --no-install-recommends neofetch && \
-   echo "Installation Completed!"
+   echo "Neofetch Installed"
 
 # copy supervisor config file to start openssh-server
+
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 VOLUME [ "/var/log/mysql/", "/var/log/apache2/", "/www", "/opt/lampp/apache2/conf.d/" ]

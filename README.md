@@ -1,15 +1,15 @@
 
-# docker-xjamppt
+# docker-xjamdppt
 
 
-This image is my fork of `docker-xampp` adding Tomcat and Java. Like the original image, it also runs SSH server to connect to. __Both MySQL and phpmyadmin use default XAMPP password__.
+This image is my fork of `docker-xampp` adding Tomcat, Java and Derby DB. Like the original image, it also runs SSH server to connect to. __Both MySQL and phpmyadmin use default XAMPP password__.
 
 
 # Building this image
 
 Example build command:
 ```bash 
-docker build -t xjamppt . --build-arg XAMPP_PATH=~/Downloads/xampp-linux-*-installer.run
+docker build -t xjamdppt . --build-arg XAMPP_PATH=~/Downloads/xampp-linux-*-installer.run
 ```
 Where you need to set the "XAMPP_PATH" variable to your local download of xampp, which can be downloaded [here](https://www.apachefriends.org/it/download.html)
 
@@ -31,12 +31,10 @@ Where:
 
 - `41063` is tomcat server. To run the tomcat server you have to execute `/opt/tomcat/apache-tomcat-8.5.79/bin/startup.sh`. All the other scripts are in the same directory.
 
-- `~/my_wrb_pages` is a shared volume, It enables you to store data permanently outside docker
+- `~/my_web_pages` is a shared volume, It enables you to store data permanently outside docker
 
 To browse to your web page, visit this URL: [http://localhost:41062/www](http://localhost:41062/www)
 And to open up the XAMPP interface: [http://localhost:41062/](http://localhost:41062/)
-
-The credentials for the manager panel for tomcat are "manger:manager" and "admin:admin"
 
 # Get a shell terminal inside your container
 
@@ -64,6 +62,8 @@ docker rm CONTAINER_ID
 service | username | password
 ------- | -------- | ---------
 ssh     | root     | root
+tomcat  | admin    | admin
+tomcat  | manager  | manager
 
 ---
 
