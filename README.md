@@ -49,6 +49,20 @@ Then, you need to move the webapp to `my_web_pages/<webapp_name>` and run the co
 docker exec -it myXampp deploy_website.sh /www/<webapp_name>
 ```
 
+# Derby DB
+
+## Start server 
+
+```bash
+docker exec -ti myXampp bash
+bash> java -jar $DERBY_INSTALL/lib/derbyrun.jar server start &
+```
+
+## Interact with the DBMS
+```bash
+java -jar $DERBY_INSTALL/lib/derbyrun.jar ij
+```
+
 
 # Get a shell terminal inside your container
 
