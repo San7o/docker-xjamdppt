@@ -9,7 +9,7 @@ This image is my fork of `docker-xampp` adding Tomcat, Java and Derby DB. Like t
 
 Example build command:
 ```bash 
-docker build -t xjamdppt . --build-arg XAMPP_PATH=~/Downloads/xampp-linux-*-installer.run
+docker build -t xjamdppt . --build-arg XAMPP_PATH=./xampp-linux-*-installer.run
 ```
 Where you need to set the "XAMPP_PATH" variable to your local download of xampp, which can be downloaded [here](https://www.apachefriends.org/it/download.html)
 
