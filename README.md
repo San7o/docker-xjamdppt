@@ -20,7 +20,7 @@ Or if you want you can enable downloading from docker by changing the Dockerfile
 This image uses /www directory for your page files, so you need to mount it.
 
 ```bash
-docker run --name myXampp -p 41061:22 -p 41062:80 -p 41063:8080 -d -v ~/my_web_pages:/www xjamdppt
+docker run --name myXampp -p 41061:22 -p 41062:80 -p 41063:8080 -d -v ~/my_web_pages:/www -v ./init-db.sql:/init-db.sql xjamdppt 
 ```
 
 Where:

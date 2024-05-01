@@ -142,11 +142,6 @@ RUN echo "#!/bin/bash" > /bin/deploy_website.sh && \
     echo "mv target/*.war /opt/tomcat/apache-tomcat-8.5.79/webapps/" >> /bin/deploy_website.sh && \
     chmod +x /bin/deploy_website.sh
 
-# Script to fill the DB
-
-RUN echo "CONNECT 'jdbc:derby://localhost:1527/DemoDB;create=true';" > /init-db.sql && \
-    echo "CREATE TABLE users(ID INT PRIMARY KEY, NAME VARCHAR(10), PASSWORD VARCHAR(10));" >> /init-db.sql && \
-    echo "INSERT INTO users VALUES(0, 'admin', 'admin'),(1, 'manager','qwerty');" >> /init-db.sql
 
 # Neofetch
 
