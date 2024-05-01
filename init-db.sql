@@ -9,7 +9,7 @@ INSERT INTO Profili VALUES('admin', '06nimda!', 'Vincenzo', 'Marco', '1990-01-01
 
 
 
-CREATE TABLE Eventi(titolo VARCHAR(50) PRIMARY KEY, sottotitolo VARCHAR(50), descrizione VARCHAR(300), tipologia VARCHAR(30), luogo VARCHAR(30), data DATE, ora TIME, timage BLOB, tipologiaBiglietti VARCHAR(30), prezzo REAL, sconto REAL, numeroClick INT);
+CREATE TABLE Eventi(titolo VARCHAR(50) PRIMARY KEY, sottotitolo VARCHAR(50), descrizione VARCHAR(300), tipologia VARCHAR(30), luogo VARCHAR(30), data DATE, ora TIME, image BLOB, tipologiaBiglietti VARCHAR(30), prezzo REAL, sconto REAL, numeroClick INT);
 
 INSERT INTO Eventi VALUES('Concerto sotto le stelle', 'Serata di musica classica', 'Un concerto all aperto sotto il cielo stellato del Trentino con esibizioni da parte di talentuosi musicisti locali. Portate una coperta e godetevi un esperienza musicale unica.', 'A piedi', 'Trento', '2024-06-15', '20:00', NULL, 'Generale', 15.00, 0.00, 256);
 
