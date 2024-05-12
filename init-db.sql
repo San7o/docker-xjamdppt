@@ -1,5 +1,7 @@
 CONNECT 'jdbc:derby://localhost:1527/DerbyDB;create=true';
 
+DROP TABLE Profili;
+DROP TABLE Eventi;
 
 
 CREATE TABLE Profili(username VARCHAR(30) PRIMARY KEY, password VARCHAR(30), nome VARCHAR(30), cognome VARCHAR(30), birthDate DATE, email VARCHAR(30), phoneNumber VARCHAR(10), numeroAcquisti INT, isAdmin BOOLEAN);
