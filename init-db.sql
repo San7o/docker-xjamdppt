@@ -17,7 +17,7 @@ INSERT INTO Eventi VALUES('Concerto sotto le stelle', 'Serata di musica classica
 
 INSERT INTO Eventi VALUES('Mostra d arte contemporanea', 'Esplora le opere dei talenti locali', 'Una mostra d arte contemporanea che presenta le opere di artisti emergenti della regione. Scopri nuove prospettive e lasciati ispirare dalle opere esposte.', 'Concerti', 'Rovereto', '2024-07-05', '10:00', 'evento2.jpeg', 'InPiedi', 10.00, 0.00, 120);
 
-INSERT INTO Eventi VALUES('Spettacolo teatrale: Romeo e Giulietta', 'Una produzione teatrale emozionante', 'Una rappresentazione del classico di Shakespeare, Romeo e Giulietta, messa in scena da una compagnia teatrale locale. Un occasione per immergersi nella bellezza del teatro classico.', 'EventiSportivi', 'Trento', '2024-08-20', '19:30', 'evento3.jpeg', 'Seduti', 30.00, 0.10, 180);
+INSERT INTO Eventi VALUES('Spettacolo teatrale: Romeo e Giulietta', 'Una produzione teatrale emozionante', 'Una rappresentazione del classico di Shakespeare, Romeo e Giulietta, messa in scena da una compagnia teatrale locale. Un occasione per immergersi nella bellezza del teatro classico.', 'EventiSportivi', 'Trento', '2024-08-20', '19:30', 'evento3.jpeg', 'Seduti', 30.00, 20.0, 180);
 
 INSERT INTO Eventi VALUES('Escursione sul Monte Bondone', 'Una camminata nella natura', 'Un escursione guidata sul suggestivo Monte Bondone, con panorami mozzafiato e la possibilità di esplorare la flora e la fauna locali. Un esperienza immersiva nella bellezza naturale del Trentino.', 'VisiteGuidate', 'Povo', '2024-09-10', '09:00', 'evento4.jpeg', 'InPiedi', 20.00, 0.00, 90);
 
